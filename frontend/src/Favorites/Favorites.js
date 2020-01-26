@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import classes from './Favorites.module.css';
 import BottomNav from '../BottomNav/BottomNav';
 import { Link } from 'react-router-dom';
-import Collections from '../Collections/Collections';
+import Coll from '../Collections/Collections';
 
 class Favorites extends Component {
     render() {
+        const Collections = Coll.getCollections();
         const classesDict = {
             "shoes": classes.shoes,
             "venice": classes.venice,
