@@ -24,6 +24,7 @@ class Demo extends Component {
   }
 
   swipeUpHandler() {
+    this.setState({ open: true });
     if (!this.tensorVideo.current.prediction) {
       return;
     }
@@ -48,7 +49,6 @@ class Demo extends Component {
           };
         }));
       });
-    this.setState({ open: true });
   }
   swipeDownHandler() {
     this.setState({ open: false });
@@ -100,7 +100,11 @@ class Demo extends Component {
     return (
       <div className={classes.Demo}>
         <TensorVideo
-          classifier={this.props.content.name === "default" ? "default" : ModelHandler.getClassifier(this.props.content.name)}
+          classifier={
+            this.props.content.name === "default"
+              ? "default"
+              : ModelHandler.getClassifier(this.props.content.name)
+          }
           ref={this.tensorVideo}
         ></TensorVideo>
         <div className={this.state.open ? classes.onSwipe : null}>
