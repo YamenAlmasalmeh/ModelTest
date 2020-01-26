@@ -32,7 +32,6 @@ class TensorVideo extends Component {
     });
 
     while (this.active) {
-      console.log(this.props.classifier)
       if (this.props.classifier && this.props.classifier.getNumClasses() > 0) {
         const img = await this.webcam.capture();
 

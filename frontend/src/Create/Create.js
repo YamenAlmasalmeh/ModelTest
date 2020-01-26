@@ -8,20 +8,19 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 import ModelHandler from "../ModelHandler";
 import TensorVideo from "../TensorVideo";
-import Coll from "../Collections/Collections"
+import Coll from "../Collections/Collections";
+import { Link } from 'react-router-dom'
 
 class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
       classifierName: "",
-      held: false,
+      currentClass: "",
       allModels: [],
       nameBox: false
     };
     this.active = true;
-    this.fillButton = this.fillButton.bind(this);
-    this.unfillButton = this.unfillButton.bind(this);
     this.publishClickHandler = this.publishClickHandler.bind(this);
     this.classifier = knnClassifier.create();
     this.autocomplete = React.createRef();
@@ -31,7 +30,7 @@ class Create extends Component {
 
   onPictureClick() {
     //check if combo box value exists in list
-    const classifierName = "test";
+    const classifierName = this.state.currentClass;
 
     if (!this.state.allModels.includes(classifierName)) {
       this.setState(prev => {
@@ -49,17 +48,16 @@ class Create extends Component {
     );
   }
 
-  fillButton() {
-    this.setState({ held: true });
-  }
-
-  unfillButton() {
-    this.setState({ held: false });
-  }
-
   publishClickHandler() {
     ModelHandler.createClassifier(this.state.classifierName, this.classifier);
-    Coll.getCollections()[3].rendered = 1;
+
+    Coll.getCollections().forEach((element, index) => {
+      if(element.name === this.state.classifierName){
+        Coll.getCollections()[index].rendered = 1;
+        return;
+      }
+    })
+
   }
 
   render() {
@@ -69,22 +67,15 @@ class Create extends Component {
           classifier={this.classifier}
           ref={this.tensorVideo}
         ></TensorVideo>
-        <Autocomplete
-          ref={this.autocomplete}
-          className={classes.box}
-          id="combo-box"
-          options={this.state.allModels}
-          getOptionLabel={option => option}
-          style={{ width: 300 }}
-          renderInput={params => (
-            <TextField
-              {...params}
-              label="Model Name"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
+
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onChange={ev => this.setState({ currentClass: ev.target.value })}
+        >
+          <TextField id="outlined-basic" label="Item Name" variant="outlined" />
+        </form>
         <form
           className={classes.root}
           noValidate
@@ -100,21 +91,23 @@ class Create extends Component {
         <div>
           <i
             onClick={() => this.onPictureClick()}
-            className={
-              this.state.held
-                ? "fas fa-camera-retro " +
-                  classes.camera +
-                  " " +
-                  classes.cameraFilled
-                : "fas fa-camera-retro " + classes.camera
-            }
-            onMouseDown={this.fillButton}
-            onMouseUp={this.unfillButton}
+            className={"fas fa-camera-retro " +
+                  classes.camera}
           ></i>
+          <Link to="/">
           <i
             className={"fas fa-plus " + classes.correct}
             onClick={this.publishClickHandler}
           ></i>
+          </Link>
+        </div>
+
+        <div className={classes.container}>
+          <div className="ui bulleted list">
+            {this.state.allModels.map(className => {
+              return <div className="item" key={className}>{className}</div>;
+            })}
+          </div>
         </div>
 
         <BottomNav />

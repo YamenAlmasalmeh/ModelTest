@@ -43,11 +43,15 @@
     text-align: center;
     line-height: 98px;
     color: rgb(158, 174, 226);
-    transition: 1s;
 }
 
-.cameraFilled{
-    color: black;
-    transition: 3s;
+.camera:active{
+    color: white;
     background-color:rgb(158, 174, 226);
+}
+
+.container{
+    width: 250px;
+    margin: 0 auto;
+    margin-top: 40px;
 }
