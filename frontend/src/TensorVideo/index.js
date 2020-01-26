@@ -6,10 +6,10 @@ import ModelHandler from "../ModelHandler";
 class TensorVideo extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      prediction:"N/A",
-      confidence:"N/A"
-    }
+    this.state = {
+      prediction: "N/A",
+      confidence: "N/A"
+    };
     this.active = true;
     this.camera = this.camera.bind(this);
     this.webcam = null;
@@ -36,7 +36,26 @@ class TensorVideo extends Component {
     });
 
     while (this.active) {
-      if (this.props.classifier && this.props.classifier.getNumClasses() > 0) {
+      if (this.props.classifier === "default") {
+        const img = await this.webcam.capture();
+        const result = await net.classify(img);
+        this.prediction = result[0].className
+        this.confidence = result[0].probability
+        this.setState({
+          prediction: this.prediction,
+          confidence: Math.round(this.confidence * 100) / 100
+        });
+        
+        // Dispose the tensor to release the memory.
+        img.dispose();
+
+        // Give some breathing room by waiting for the next animation frame to
+        // fire.
+        await tf.nextFrame();
+      } else if (
+        this.props.classifier &&
+        this.props.classifier.getNumClasses() > 0
+      ) {
         const img = await this.webcam.capture();
 
         // Get the activation from mobilenet from the webcam.
@@ -50,8 +69,8 @@ class TensorVideo extends Component {
         this.confidence = result.confidences[result.label];
         this.setState({
           prediction: this.prediction,
-          confidence: (Math.round(this.confidence*100) / 100)
-        })
+          confidence: Math.round(this.confidence * 100) / 100
+        });
 
         // Dispose the tensor to release the memory.
         img.dispose();
@@ -76,7 +95,10 @@ class TensorVideo extends Component {
           width="224"
           height="224"
         ></video>
-        <h1 id="prediction">Prediction: {this.state.prediction} ||  Confidence: {this.state.confidence}</h1>
+        <h1 id="prediction">
+          Prediction: {this.state.prediction} || Confidence:{" "}
+          {this.state.confidence}
+        </h1>
       </div>
     );
   }
