@@ -1,77 +1,50 @@
 import React from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from "@tensorflow-models/mobilenet";
-import * as knnClassifier from "@tensorflow-models/knn-classifier";
+
+async function camera() {
+  const webcamElement = document.getElementById("webcam");
+  console.log("Loading mobilenet..");
+
+  // Load the model.
+  const net = await mobilenet.load();
+  console.log("Successfully loaded model");
+
+  // Create an object from Tensorflow.js data API which could capture image
+  // from the web camera as Tensor.
+  const webcam = await tf.data.webcam(webcamElement, {
+    facingMode: "environment"
+  });
+  while (true) {
+    const img = await webcam.capture();
+    const result = await net.classify(img);
+
+    document.getElementById("console").innerText = `
+      prediction: ${result[0].className}\n
+      probability: ${result[0].probability}
+    `;
+    // Dispose the tensor to release the memory.
+    img.dispose();
+
+    // Give some breathing room by waiting for the next animation frame to
+    // fire.
+    await tf.nextFrame();
+  }
+}
 
 class App extends React.Component {
   constructor() {
     super();
-
     this.state = {
-      classifiers: ["class A", "class B", "class C", "class D"]
+      videoStream: null
     };
+
     this.getStream = this.getStream.bind(this);
-    this.camera = this.camera.bind(this);
-    this.net = null;
-    this.classifier = knnClassifier.create();
   }
 
   componentDidMount() {
-    this.getStream();
-    this.camera();
-  }
-
-  async camera() {
-    const webcamElement = document.getElementById("webcam");
-
-    // Load the model.
-    this.net = await mobilenet.load();
-
-    // Create an object from Tensorflow.js data API which could capture image
-    // from the web camera as Tensor.
-    this.webcam = await tf.data.webcam(webcamElement);
-    while (true) {
-      if (this.classifier.getNumClasses() > 0) {
-        const img = await this.webcam.capture();
-
-        // Get the activation from mobilenet from the webcam.
-        const activation = this.net.infer(img, "conv_preds");
-        // Get the most likely class and confidences from the classifier module.
-        const result = await this.classifier.predictClass(activation);
-
-        const classes = this.state.classifiers;
-        document.getElementById("console").innerText = `
-          prediction: ${classes[result.label]}\n
-          probability: ${result.confidences[result.label]}
-        `;
-
-        // Dispose the tensor to release the memory.
-        img.dispose();
-      }
-
-      await tf.nextFrame();
-    }
-  }
-
-  async trainClassification(classId) {
-    if (!this.net || !this.webcam) {
-      return;
-    }
-
-    const webcamElement = document.getElementById("webcam");
-
-    // Capture an image from the web camera.
-    const img = await this.webcam.capture();
-
-    // Get the intermediate activation of MobileNet 'conv_preds' and pass that
-    // to the KNN classifier.
-    const activation = this.net.infer(img, "conv_preds");
-
-    // Pass the intermediate activation to the classifier.
-    this.classifier.addExample(activation, classId);
-
-    // Dispose the tensor to release the memory.
-    img.dispose();
+    //this.getStream();
+    camera();
   }
 
   async getStream() {
@@ -111,16 +84,6 @@ class App extends React.Component {
           width="224"
           height="224"
         ></video>
-        {this.state.classifiers.map((classifier, index) => {
-          return (
-            <button
-              id={classifier}
-              onClick={() => this.trainClassification(index)}
-            >
-              {classifier}
-            </button>
-          );
-        })}
         <div id="console"></div>
       </div>
     );

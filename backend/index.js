@@ -12,8 +12,6 @@ const server = http.Server(app);
 require('./src/serve').setup(app);
 
 //start listening on port
-server.listen(8080, () => {
-  console.log('listening on 8080')
-});
+server.listen(80, '0.0.0.0');
 
 module.exports = app;
