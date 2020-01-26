@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "deployalt": "(cd frontend && npm run build) & (cd .. && gcloud app deploy --no-promote app.yml)",
     "deploy": "(cd frontend && npm run build) & (cd .. && gcloud app deploy app.yml)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
