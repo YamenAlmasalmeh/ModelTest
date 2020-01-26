@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './HomeScreen.module.css';
-import BottomNav from './BottomNav/BottomNav'
+import BottomNav from '../BottomNav/BottomNav';
+import { Link } from 'react-router-dom';
 
 class HomeScreen extends Component {
   render() {
