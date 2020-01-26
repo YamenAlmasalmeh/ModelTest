@@ -8,7 +8,7 @@
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding-bottom: 50px;
+    padding-bottom: 150px;
     max-width: 100vw;
 }
 
@@ -52,6 +52,6 @@
 .title{
     display: inline;
     font-family: 'Lobster', cursive;
-    font-size: 35px;
-    margin-right: 130px;
+    font-size: 25px;
+    margin-right: 50px;
 }
