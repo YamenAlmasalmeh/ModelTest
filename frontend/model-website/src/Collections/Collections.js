@@ -1,16 +1,5 @@
 export default [
     {
-        name: "Toy Cars",
-        url: "toy-cars",
-        images: [
-            "https://images.unsplash.com/photo-1536846511313-4b07b637bff9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60",
-            "https://images.unsplash.com/photo-1568145399768-d78dc816f339?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60",
-            "https://images.unsplash.com/photo-1568145399895-80d8a0ad8ad7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
-        ],
-        likes: 1038,
-        creator: "ToyCarEnthusiast99",
-    },
-    {
         name: "Texas A&M",
         url: "tamu",
         images: [
@@ -19,7 +8,8 @@ export default [
             "https://upload.wikimedia.org/wikipedia/commons/3/34/Century_Tree.jpg"
         ],
         likes: 1875,
-        creator: "FightinTexasAggie"
+        creator: "FightinTexasAggie",
+        img: "american-football.png"
     },
     {
         name: "Yellowstone National Park",
@@ -30,7 +20,8 @@ export default [
             "http://www.montana.edu/yellowstoneinsects/_ldp/.private_ldp/a2057/production/master/1e686a27-c65b-44b3-92d1-b4f9fb6aa051.jpg" 
         ],
         creator: "OutdoorsyUser179",
-        likes: 1589
+        likes: 1589,
+        img: "forest.png"
     },
     {
         name:"Venice",
@@ -41,7 +32,8 @@ export default [
             "https://images.unsplash.com/photo-1551963423-59b9ace3ad05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
         ],
         likes: 4078,
-        creator: "ItalianGirl79"
+        creator: "ItalianGirl79",
+        img:"eye-mask.png"
     },
     {
         name:"Shoes",
@@ -52,6 +44,7 @@ export default [
             "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
         ],
         likes: 1038,
-        creator: "ShoeCollector078"
+        creator: "ShoeCollector078",
+        img:"slipper.png"
     }
 ];

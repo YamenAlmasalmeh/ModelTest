@@ -1,13 +1,19 @@
-.searchBar{
-    margin-top: 150px;
-    background-color: red;
+.Favorites{
+    text-align: center;
+}
+
+.Favorites h1{
+    margin-right: 10%;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .grid{
-    margin-top: 10px;
     height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding-bottom: 50px;
+    margin-left: 10%;
 }
 
 .collection{
@@ -21,6 +27,7 @@
     overflow: hidden;
     box-shadow: 0px 6px 12px -1px rgba(49,49,49,0.62);
 }
+
 
 .shoes{
     background: linear-gradient(0deg, rgba(230,213,248,1) 0%, rgba(217,193,255,1) 100%);
@@ -36,8 +43,4 @@
 
 .yellowstone{
     background: linear-gradient(180deg, rgba(126,192,238,1) 0%, rgba(194,221,241,1) 100%);
-}
-
-.hidden{
-    display: none;
 }

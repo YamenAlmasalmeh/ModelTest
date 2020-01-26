@@ -2,34 +2,23 @@ import React, { Component } from 'react';
 import classes from './MoreInfo.module.css';
 import BottomNav from '../BottomNav/BottomNav';
 import Slider from 'react-slick';
+import { Link } from 'react-router-dom'
 
 class MoreInfo extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            clicked: false,
-            likes: this.props.content.likes
-        };
-        this.clickHandler = this.clickHandler.bind(this);
+        this.handleClick = this.handleClick.bind(this)
     }
 
-    clickHandler(){
-        const newClicked = !this.state.clicked
-        let newLikes = this.state.likes
-        if (newClicked){
-            newLikes += 1
-        }
-        else{
-            newLikes -= 1
-        }
-        this.setState({clicked: newClicked, likes: newLikes})
+    handleClick(){
+        this.props.onClick(this.props.nameIndex)
     }
 
     render() {
         let images = this.props.content.images.map((el, i) => {
-            return(
-                <div className={classes.img}>
-                    <img src={el} alt= "sample model image" />
+            return (
+                <div className={classes.img} key={el}>
+                    <img src={el} alt="sample model" />
                 </div>
             )
         })
@@ -44,36 +33,38 @@ class MoreInfo extends Component {
 
         let likeButton = null
 
-        if (this.state.clicked){
+        if (this.props.clicked) {
             likeButton = "ui red button"
         }
-        else{
+        else {
             likeButton = "ui button"
         }
 
         return (
-        <div className={classes.MoreInfo}>
+            <div className={classes.MoreInfo}>
                 <Slider {...settings}>
                     {images}
                 </Slider>
-                <h1 className = {classes.ModelHeading}>Models For: {this.props.content.name}</h1>
+                <h1 className={classes.ModelHeading}>Models For: {this.props.content.name}</h1>
                 <p>Created by {this.props.content.creator}</p>
-                <div class="ui labeled button" tabindex="0">
-                    <button class={likeButton} onClick={this.clickHandler}>
-                        <i class="heart icon"></i> Like
+                <div className="ui labeled button" tabIndex="0">
+                    <button className={likeButton} onClick={this.handleClick}>
+                        <i className="heart icon"></i> Like
                     </button>
-                    <div class="ui basic red left pointing label">
-                        {this.state.likes}
+                    <div className="ui basic red left pointing label">
+                        {this.props.likes}
                     </div>
                 </div>
                 <div>
-                    <button className={classes.Demo+" "+classes.RoundButton}>Demo</button>
+                    <Link to={"/demo/" + this.props.content.url}>
+                        <button className={classes.Demo + " " + classes.RoundButton}>Demo</button>
+                    </Link>
                 </div>
                 <div>
-                    <button className={classes.Download+" "+classes.RoundButton}>Download</button>
-                </div>                
+                    <button className={classes.Download + " " + classes.RoundButton}>Download</button>
+                </div>
                 <BottomNav />
-        </div>
+            </div>
         );
     }
 }
