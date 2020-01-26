@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classes from './HomeScreen.module.css';
 import BottomNav from '../BottomNav/BottomNav';
 import { Link } from 'react-router-dom';
-import Collections from '../Collections/Collections'
+import Coll from '../Collections/Collections'
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -40,6 +40,7 @@ class HomeScreen extends Component {
             "tamu": classes.tamu,
             "yellowstone": classes.yellowstone
         }
+        const Collections = Coll.getCollections();
 
         let renderedCollections = Collections.map((el) => {
             if (el.rendered) {

@@ -8,25 +8,25 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 import ModelHandler from "../ModelHandler";
 import TensorVideo from "../TensorVideo";
+import Coll from "../Collections/Collections"
 
 class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      classifierName: "",
       held: false,
-      allModels: []
+      allModels: [],
+      nameBox: false
     };
     this.active = true;
     this.fillButton = this.fillButton.bind(this);
     this.unfillButton = this.unfillButton.bind(this);
+    this.publishClickHandler = this.publishClickHandler.bind(this);
     this.classifier = knnClassifier.create();
     this.autocomplete = React.createRef();
     this.tensorVideo = React.createRef();
     this.webcam = null;
-  }
-
-  publish(name) {
-    ModelHandler.createClassifier(name, this.classifier);
   }
 
   onPictureClick() {
@@ -57,10 +57,18 @@ class Create extends Component {
     this.setState({ held: false });
   }
 
+  publishClickHandler() {
+    ModelHandler.createClassifier(this.state.classifierName, this.classifier);
+    Coll.getCollections()[3].rendered = 1;
+  }
+
   render() {
     return (
       <div className={classes.Create}>
-        <TensorVideo classifier={this.classifier} ref={this.tensorVideo}></TensorVideo>
+        <TensorVideo
+          classifier={this.classifier}
+          ref={this.tensorVideo}
+        ></TensorVideo>
         <Autocomplete
           ref={this.autocomplete}
           className={classes.box}
@@ -71,25 +79,44 @@ class Create extends Component {
           renderInput={params => (
             <TextField
               {...params}
-              label="Combo box"
+              label="Model Name"
               variant="outlined"
               fullWidth
             />
           )}
         />
-        <i
-          onClick={() => this.onPictureClick()}
-          className={
-            this.state.held
-              ? "fas fa-camera-retro " +
-                classes.camera +
-                " " +
-                classes.cameraFilled
-              : "fas fa-camera-retro " + classes.camera
-          }
-          onMouseDown={this.fillButton}
-          onMouseUp={this.unfillButton}
-        ></i>
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onChange={ev => this.setState({ classifierName: ev.target.value })}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Collection Name"
+            variant="outlined"
+          />
+        </form>
+        <div>
+          <i
+            onClick={() => this.onPictureClick()}
+            className={
+              this.state.held
+                ? "fas fa-camera-retro " +
+                  classes.camera +
+                  " " +
+                  classes.cameraFilled
+                : "fas fa-camera-retro " + classes.camera
+            }
+            onMouseDown={this.fillButton}
+            onMouseUp={this.unfillButton}
+          ></i>
+          <i
+            className={"fas fa-plus " + classes.correct}
+            onClick={this.publishClickHandler}
+          ></i>
+        </div>
+
         <BottomNav />
         <script src="index.js"></script>
       </div>

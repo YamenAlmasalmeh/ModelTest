@@ -44,11 +44,14 @@ class TensorVideo extends Component {
         //result.confidences[result.label]
         this.prediction = result.label;
         this.confidence = result.confidences[result.label];
-        document.getElementById("prediction").innerText = `
+        const pred = document.getElementById("prediction");
+        const conf = document.getElementById("confidence");
+        if (!pred || !conf) return;
+        pred.innerText = `
           Prediction: ${result.label}\n
         `;
 
-        document.getElementById("confidence").innerText = `
+        conf.innerText = `
           probability: ${result.confidences[result.label]}
         `;
 

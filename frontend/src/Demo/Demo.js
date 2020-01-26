@@ -22,11 +22,10 @@ class Demo extends Component {
   }
 
   swipeUpHandler() {
-    console.log(this.tensorVideo.current.prediction);
     if (!this.tensorVideo.current.prediction) {
       return;
     }
-    let term = this.state.prediction;
+    let term = this.tensorVideo.current.prediction;
     const fetchOptions = {
       method: "get",
       headers: {
@@ -90,6 +89,9 @@ class Demo extends Component {
       );
     });
 
+    console.log(this.props.content.name);
+    console.log(ModelHandler.getClassifier(this.props.content.name))
+
     return (
       <div className={classes.Demo}>
         <TensorVideo
@@ -112,96 +114,7 @@ class Demo extends Component {
             <h2>Bing Image Results</h2>
             <div className={"container " + classes.container}>
               <div className={"ui grid " + classes.results}>
-                <div className="row">
-                  <div className="sixteen wide column">
-                    <div className={"card " + classes.card}>
-                      <div className="image">
-                        {imgs[0] ? (
-                          <img src={imgs[0]} alt="comparison 1" />
-                        ) : (
-                          <div className={classes.spinner}>
-                            <i className="fas fa-spinner fa-pulse"></i>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <Swipeable
-                  onSwipedUp={this.swipeUpHandler}
-                  onSwipedDown={this.swipeDownHandler}
-                >
-                  <div className={drawerClass}>
-                    {chevron}
-                    <h2>Bing Image Results</h2>
-                    <div className={"container " + classes.container}>
-                      <div className={"ui grid " + classes.results}>
-                        {allImgs}
-                      </div>
-                    </div>
-                  </div>
-                </Swipeable>
-                <div className="row">
-                  <div className="sixteen wide column">
-                    <div className={"card " + classes.card}>
-                      <div className="image">
-                        {imgs[2] ? (
-                          <img src={imgs[2]} alt="comparison 1" />
-                        ) : (
-                          <div className={classes.spinner}>
-                            <i className="fas fa-spinner fa-pulse"></i>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="sixteen wide column">
-                    <div className={"card " + classes.card}>
-                      <div className="image">
-                        {imgs[3] ? (
-                          <img src={imgs[3]} alt="comparison 1" />
-                        ) : (
-                          <div className={classes.spinner}>
-                            <i className="fas fa-spinner fa-pulse"></i>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="sixteen wide column">
-                    <div className={"card " + classes.card}>
-                      <div className="image">
-                        {imgs[4] ? (
-                          <img src={imgs[4]} alt="comparison 1" />
-                        ) : (
-                          <div className={classes.spinner}>
-                            <i className="fas fa-spinner fa-pulse"></i>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="sixteen wide column">
-                    <div className={"card " + classes.card}>
-                      <div className="image">
-                        {imgs[5] ? (
-                          <img src={imgs[5]} alt="comparison 1" />
-                        ) : (
-                          <div className={classes.spinner}>
-                            <i className="fas fa-spinner fa-pulse"></i>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {allImgs}
               </div>
             </div>
           </div>
