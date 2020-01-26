@@ -14,9 +14,13 @@ class Demo extends Component {
         this.state = {
             open: false,
             prediction: "grass",
+            correct: false,
+            incorrect: false
         };
         this.swipeUpHandler = this.swipeUpHandler.bind(this);
         this.swipeDownHandler = this.swipeDownHandler.bind(this);
+        this.correctOnClick = this.correctOnClick.bind(this);
+        this.incorrectOnClick = this.incorrectOnClick.bind(this);
     }
 
     swipeUpHandler() {
@@ -49,6 +53,14 @@ class Demo extends Component {
                     )
                 })
         }
+    }
+
+    correctOnClick(){
+        this.setState({correct:true, incorrect: false})
+    }
+
+    incorrectOnClick(){
+        this.setState({correct:false, incorrect: true})
     }
 
     render() {
@@ -91,9 +103,12 @@ class Demo extends Component {
                 <div id="console"></div>
                 <h1>Prediction: {this.state.prediction}</h1>
                 <div className={this.state.open ? classes.onSwipe : null}>
-                    <i className={"fas fa-check " + classes.correct}></i>
-                    <i className={"fas fa-times " + classes.incorrect}></i>
-                </div>
+                    <i className={this.state.correct
+                        ? "fas fa-check " + classes.correct+ " " + classes.correctFilled
+                        : "fas fa-check " + classes.correct} onClick={this.correctOnClick}></i>
+<i className={this.state.incorrect
+                        ? "fas fa-times " + classes.incorrect+ " " + classes.incorrectFilled
+                        : "fas fa-times " + classes.incorrect} onClick={this.incorrectOnClick}></i>                </div>
                 <Swipeable onSwipedUp={this.swipeUpHandler} onSwipedDown={this.swipeDownHandler}>
                     <div className={drawerClass}>
                         {chevron}
