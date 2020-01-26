@@ -1,4 +1,15 @@
 
+.Demo{
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video{
+    border: 2px solid black;
+    height: 300px;
+    width: 300px;
+    margin-top: 50px;
+}
 
 .correct{
     border: 3px solid #C9E29E;
@@ -34,7 +45,7 @@
     padding: 15px;
     background-color:rgb(188, 206, 255);
     color: white;
-    margin-top: 5vh;
+    margin-top: 13vh;
     z-index: 50;
     font-size: 16px;
     border-radius: 10%;
