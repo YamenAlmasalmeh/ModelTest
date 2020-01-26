@@ -9,7 +9,8 @@ export default [
         ],
         likes: 1875,
         creator: "FightinTexasAggie",
-        img: "american-football.png"
+        img: "american-football.png",
+        rendered: 1
     },
     {
         name: "Yellowstone National Park",
@@ -21,7 +22,8 @@ export default [
         ],
         creator: "OutdoorsyUser179",
         likes: 1589,
-        img: "forest.png"
+        img: "forest.png",
+        rendered: 1
     },
     {
         name:"Venice",
@@ -33,7 +35,8 @@ export default [
         ],
         likes: 4078,
         creator: "ItalianGirl79",
-        img:"eye-mask.png"
+        img:"eye-mask.png",
+        rendered: 1
     },
     {
         name:"Shoes",
@@ -45,6 +48,7 @@ export default [
         ],
         likes: 1038,
         creator: "ShoeCollector078",
-        img:"slipper.png"
+        img:"slipper.png",
+        rendered: 0
     }
 ];

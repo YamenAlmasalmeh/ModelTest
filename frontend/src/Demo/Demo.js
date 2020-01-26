@@ -8,7 +8,7 @@ import TensorVideo from "../TensorVideo";
 let subscriptionKey = "a81d3e6d76a44b9cbd3dea424abefc80";
 let host = "api.cognitive.microsoft.com";
 let path = "/bing/v7.0/images/search";
-let imgs = [];
+let BingSearch = [];
 
 class Demo extends Component {
   constructor(props) {
@@ -22,11 +22,11 @@ class Demo extends Component {
   }
 
   swipeUpHandler() {
-    console.log(this.tensorVideo.current.prediction)
+    console.log(this.tensorVideo.current.prediction);
     if (!this.tensorVideo.current.prediction) {
       return;
     }
-    let term = this.tensorVideo.current.prediction;
+    let term = this.state.prediction;
     const fetchOptions = {
       method: "get",
       headers: {
@@ -39,9 +39,13 @@ class Demo extends Component {
     )
       .then(res => res.json())
       .then(res => {
-        [...new Array(6).keys()].map((v, i) => {
-          return imgs.push(res.value[i].contentUrl);
-        });
+        return (BingSearch = [...new Array(6).keys()].map((v, i) => {
+          return {
+            img: res.value[i].contentUrl,
+            name: res.value[i].name.slice(0, 20) + "...",
+            link: res.value[i].webSearchUrl
+          };
+        }));
       });
     this.setState({ open: true });
   }
@@ -61,11 +65,38 @@ class Demo extends Component {
       drawerClass = classes.googleResults;
       chevron = <i className="fas fa-chevron-up"></i>;
     }
+    const allImgs = BingSearch.map(el => {
+      return (
+        <div className="row">
+          <div className="sixteen wide column">
+            <a href={el.link} target="_blank">
+              <div className={"card " + classes.card}>
+                <div className="image">
+                  {el.img ? (
+                    <img src={el.img} alt="comparison 1" />
+                  ) : (
+                    <div className={classes.spinner}>
+                      <i className="fas fa-spinner fa-pulse"></i>
+                    </div>
+                  )}
+                </div>
+                <div className="content">
+                  <div className="header">{el.name}</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      );
+    });
 
     return (
       <div className={classes.Demo}>
         <TensorVideo
-          classifier={this.props.content.name && ModelHandler.getClassifier(this.props.content.name)}
+          classifier={
+            this.props.content.name &&
+            ModelHandler.getClassifier(this.props.content.name)
+          }
           ref={this.tensorVideo}
         ></TensorVideo>
         <div className={this.state.open ? classes.onSwipe : null}>
@@ -96,21 +127,21 @@ class Demo extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="sixteen wide column">
-                    <div className={"card " + classes.card}>
-                      <div className="image">
-                        {imgs[1] ? (
-                          <img src={imgs[1]} alt="comparison 1" />
-                        ) : (
-                          <div className={classes.spinner}>
-                            <i className="fas fa-spinner fa-pulse"></i>
-                          </div>
-                        )}
+
+                <Swipeable
+                  onSwipedUp={this.swipeUpHandler}
+                  onSwipedDown={this.swipeDownHandler}
+                >
+                  <div className={drawerClass}>
+                    {chevron}
+                    <h2>Bing Image Results</h2>
+                    <div className={"container " + classes.container}>
+                      <div className={"ui grid " + classes.results}>
+                        {allImgs}
                       </div>
                     </div>
                   </div>
-                </div>
+                </Swipeable>
                 <div className="row">
                   <div className="sixteen wide column">
                     <div className={"card " + classes.card}>

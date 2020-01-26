@@ -6,8 +6,15 @@
 .grid{
     margin-top: 10px;
     height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding-bottom: 50px;
+    max-width: 100vw;
+}
+
+.popular{
+    max-width: 100%;
+    margin-left: 12.5%;
 }
 
 .collection{
