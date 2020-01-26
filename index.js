@@ -1,31 +1,12 @@
-let net;
-const webcamElement = document.getElementById('webcam');
+const express = require("express");
+const app = express();
 
-async function app() {
-    console.log('Loading mobilenet..');
+//Endpoint setup
+require('./src/serve').setup(app);
 
-    // Load the model.
-    net = await mobilenet.load();
-    console.log('Successfully loaded model');
+const server = app.listen(8080, () => {
+  const host = server.address().address;
+  const port = server.address().port;
 
-    // Create an object from Tensorflow.js data API which could capture image 
-    // from the web camera as Tensor.
-    const webcam = await tf.data.webcam(webcamElement);
-    while (true) {
-        const img = await webcam.capture();
-        const result = await net.classify(img);
-
-        document.getElementById('console').innerText = `
-        prediction: ${result[0].className}\n
-        probability: ${result[0].probability}
-      `;
-        // Dispose the tensor to release the memory.
-        img.dispose();
-
-        // Give some breathing room by waiting for the next animation frame to
-        // fire.
-        await tf.nextFrame();
-    }
-}
-
-app();
+  console.log(`Example app listening at http://${host}:${port}`);
+});
