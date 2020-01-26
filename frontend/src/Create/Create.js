@@ -51,13 +51,13 @@ class Create extends Component {
   publishClickHandler() {
     ModelHandler.createClassifier(this.state.classifierName, this.classifier);
 
-    Coll.getCollections().forEach((element, index) => {
-      if(element.name === this.state.classifierName){
-        Coll.getCollections()[index].rendered = 1;
+    for (let i = 0; i < Coll.getCollections().length; i++) {
+      const element = Coll.getCollections()[i];
+      if (element.name === this.state.classifierName) {
+        Coll.getCollections()[i].rendered = 1;
         return;
       }
-    })
-
+    }
     Coll.getCollections().push({
       name: this.state.classifierName,
       url: Math.floor(Math.random() * 100),
@@ -98,13 +98,13 @@ class Create extends Component {
           <i
             onClick={() => this.onPictureClick()}
             className={"fas fa-camera-retro " +
-                  classes.camera}
+              classes.camera}
           ></i>
           <Link to="/">
-          <i
-            className={"fas fa-plus " + classes.correct}
-            onClick={this.publishClickHandler}
-          ></i>
+            <i
+              className={"fas fa-plus " + classes.correct}
+              onClick={this.publishClickHandler}
+            ></i>
           </Link>
         </div>
 
