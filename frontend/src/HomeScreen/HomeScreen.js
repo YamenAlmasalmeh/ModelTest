@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './HomeScreen.module.css';
 import BottomNav from '../BottomNav/BottomNav';
 import { Link } from 'react-router-dom';
+import Collections from '../Collections/Collections'
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -33,6 +34,29 @@ class HomeScreen extends Component {
     }
 
     render() {
+        const classesDict = {
+            "shoes": classes.shoes,
+            "venice": classes.venice,
+            "tamu": classes.tamu,
+            "yellowstone": classes.yellowstone
+        }
+
+        let renderedCollections = Collections.map((el) => {
+            if (el.rendered) {
+                const shorthand = el.url
+                return (<div className="seven wide column" >
+                    <Link to={"/moreinfo/" + el.url}>
+                        <div className={this.classDeterminer("Shoes") + " " + classesDict[shorthand]}>
+                            <h3 style={{ "fontSize": "24px" }}>
+                                {el.name}
+                            </h3>
+                            <img src={el.img} alt={el.name} style={{ "height": "300px", "marginLeft": "50px" }}></img>
+                        </div>
+                    </Link>
+                </div>)
+            }
+        })
+
         return (
             <div className={classes.HomeScreen}>
                 <div className="ui search" style={{ "marginTop": "15px" }}>
@@ -44,55 +68,9 @@ class HomeScreen extends Component {
                 </div>
                 <div className={classes.grid}>
                     <h1>Popular</h1>
-                    <div className="ui grid">
-                        <div className="row">
-                            <div className="one wide column" />
-                            <div className="seven wide column" >
-                                <Link to="/moreinfo/shoes">
-                                    <div className={this.classDeterminer("Shoes") + " " + classes.shoes}>
-                                        <h3 style={{ "fontSize": "24px" }}>
-                                            Shoes
-                                        </h3>
-                                        <img src="slipper.png" alt="slipper" style={{ "height": "300px", "marginLeft": "80px" }}></img>
-                                    </div>
-                                </Link>
-                            </div>
-
-                            <div className="seven wide column">
-                                <Link to="/moreinfo/venice">
-                                    <div className={this.classDeterminer("The City of Venice") + " " + classes.venice}>
-                                        <h3 style={{ "fontSize": "24px" }}>
-                                            The City of Venice
-                                        </h3>
-                                        <img src="eye-mask.png" alt="mask" style={{ "height": "240px", "marginLeft": "80px" }}></img>
-                                    </div>
-                                </Link>
-
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="one wide column" />
-                            <div className="seven wide column">
-                                <Link to="/moreinfo/tamu">
-                                <div className={this.classDeterminer("Texas A&M Campus Guide") + " " + classes.tamu}>
-                                        <h3 style={{ "fontSize": "24px" }}>
-                                            Texas A&M Campus Guide
-                                        </h3>
-                                        <img src="american-football.png" alt="football" style={{ "height": "300px", "marginLeft": "0px" }}></img>
-                                    </div>
-                                </Link>
-                            </div>
-
-                            <div className="seven wide column">
-                                <Link to="/moreinfo/yellowstone">
-                                <div className={this.classDeterminer("Yellowstone National Park Guide") + " " + classes.yellowstone}>
-                                        <h3 style={{ "fontSize": "24px" }}>
-                                            Yellowstone National Park Guide
-                                        </h3>
-                                        <img src="forest.png" alt="forest" style={{ "height": "250px", "marginLeft": "70px" }}></img>
-                                    </div>
-                                </Link>
-                            </div>
+                    <div className={classes.popular}>
+                        <div className="ui grid">
+                            {renderedCollections}
                         </div>
                     </div>
                     <h3>Assisted</h3>

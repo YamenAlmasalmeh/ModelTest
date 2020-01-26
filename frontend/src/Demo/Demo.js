@@ -6,7 +6,7 @@ import { Swipeable } from 'react-swipeable';
 let subscriptionKey = 'a81d3e6d76a44b9cbd3dea424abefc80';
 let host = 'api.cognitive.microsoft.com';
 let path = '/bing/v7.0/images/search';
-let imgs = []
+let BingSearch = []
 
 class Demo extends Component {
     constructor(props) {
@@ -39,8 +39,12 @@ class Demo extends Component {
             fetch("https://" + host + path + '?q=' + encodeURIComponent(term), fetchOptions)
                 .then(res => res.json())
                 .then(res => {
-                    [...new Array(6).keys()].map((v, i) => {
-                        return imgs.push(res.value[i].contentUrl)
+                    return BingSearch = [...new Array(6).keys()].map((v, i) => {
+                        return {
+                            img: res.value[i].contentUrl,
+                            name: res.value[i].name.slice(0, 20) + "...",
+                            link: res.value[i].webSearchUrl
+                        }
                     }
                     )
                 })
@@ -63,6 +67,23 @@ class Demo extends Component {
             chevron = <i className="fas fa-chevron-up"></i>
         }
 
+        const allImgs = BingSearch.map((el) => {
+            return (
+                <div className="row">
+                    <div className="sixteen wide column" >
+                        <a href={el.link} target="_blank"><div className={"card " + classes.card}>
+                            <div className="image">
+                                {el.img ? <img src={el.img} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
+                            </div>
+                            <div className="content">
+                                <div className="header">{el.name}</div>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            )
+        })
 
         return (
             <div className={classes.Demo}>
@@ -77,62 +98,9 @@ class Demo extends Component {
                     <div className={drawerClass}>
                         {chevron}
                         <h2>Bing Image Results</h2>
-                        <div className={"container "+ classes.container}>
+                        <div className={"container " + classes.container}>
                             <div className={"ui grid " + classes.results}>
-                                <div className="row">
-                                    <div className="sixteen wide column" >
-                                        <div className={"card " + classes.card}>
-                                            <div className="image">
-                                                {imgs[0] ? <img src={imgs[0]} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="sixteen wide column" >
-                                        <div className={"card " + classes.card}>
-                                            <div className="image">
-                                                {imgs[1] ? <img src={imgs[1]} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="sixteen wide column" >
-                                        <div className={"card " + classes.card}>
-                                            <div className="image">
-                                                {imgs[2] ? <img src={imgs[2]} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="sixteen wide column" >
-                                        <div className={"card " + classes.card}>
-                                            <div className="image">
-                                                {imgs[3] ? <img src={imgs[3]} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="sixteen wide column" >
-                                        <div className={"card " + classes.card}>
-                                            <div className="image">
-                                                {imgs[4] ? <img src={imgs[4]} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="sixteen wide column" >
-                                        <div className={"card " + classes.card}>
-                                            <div className="image">
-                                                {imgs[5] ? <img src={imgs[5]} alt="comparison 1" /> : <div className={classes.spinner}><i className="fas fa-spinner fa-pulse"></i></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {allImgs}
                             </div>
                         </div>
                     </div>
