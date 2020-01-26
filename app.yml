@@ -1,2 +1,6 @@
 runtime: nodejs
 env: flex
+skip_files:
+- frontend/node_modules/
+- frontend/src/
+- frontend/public/
