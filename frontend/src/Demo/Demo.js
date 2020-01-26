@@ -19,6 +19,8 @@ class Demo extends Component {
     this.swipeUpHandler = this.swipeUpHandler.bind(this);
     this.swipeDownHandler = this.swipeDownHandler.bind(this);
     this.tensorVideo = React.createRef();
+    this.correctOnClick = this.correctOnClick.bind(this);
+    this.incorrectOnClick = this.incorrectOnClick.bind(this);
   }
 
   swipeUpHandler() {
@@ -48,11 +50,17 @@ class Demo extends Component {
       });
     this.setState({ open: true });
   }
-
   swipeDownHandler() {
     this.setState({ open: false });
   }
 
+  correctOnClick() {
+    this.setState({ correct: true, incorrect: false });
+  }
+
+  incorrectOnClick() {
+    this.setState({ correct: false, incorrect: true });
+  }
   render() {
     let drawerClass = null;
     let chevron = null;
@@ -89,21 +97,36 @@ class Demo extends Component {
       );
     });
 
-    console.log(this.props.content.name);
-    console.log(ModelHandler.getClassifier(this.props.content.name))
 
     return (
       <div className={classes.Demo}>
         <TensorVideo
-          classifier={
-            this.props.content.name &&
-            ModelHandler.getClassifier(this.props.content.name)
-          }
+          classifier={ModelHandler.getClassifier(this.props.content.name)}
           ref={this.tensorVideo}
         ></TensorVideo>
         <div className={this.state.open ? classes.onSwipe : null}>
-          <i className={"fas fa-check " + classes.correct}></i>
-          <i className={"fas fa-times " + classes.incorrect}></i>
+          <i
+            className={
+              this.state.correct
+                ? "fas fa-check " +
+                  classes.correct +
+                  " " +
+                  classes.correctFilled
+                : "fas fa-check " + classes.correct
+            }
+            onClick={this.correctOnClick}
+          ></i>
+          <i
+            className={
+              this.state.incorrect
+                ? "fas fa-times " +
+                  classes.incorrect +
+                  " " +
+                  classes.incorrectFilled
+                : "fas fa-times " + classes.incorrect
+            }
+            onClick={this.incorrectOnClick}
+          ></i>{" "}
         </div>
         <Swipeable
           onSwipedUp={this.swipeUpHandler}
@@ -113,12 +136,12 @@ class Demo extends Component {
             {chevron}
             <h2>Bing Image Results</h2>
             <div className={"container " + classes.container}>
-              <div className={"ui grid " + classes.results}>
-                {allImgs}
-              </div>
+              <div className={"ui grid " + classes.results}>{allImgs}</div>
             </div>
           </div>
         </Swipeable>
+        <BottomNav />
+        <script src="index.js"></script>
         <BottomNav />
         <script src="index.js"></script>
       </div>

@@ -32,6 +32,7 @@ class TensorVideo extends Component {
     });
 
     while (this.active) {
+      console.log(this.props.classifier)
       if (this.props.classifier && this.props.classifier.getNumClasses() > 0) {
         const img = await this.webcam.capture();
 
@@ -45,14 +46,9 @@ class TensorVideo extends Component {
         this.prediction = result.label;
         this.confidence = result.confidences[result.label];
         const pred = document.getElementById("prediction");
-        const conf = document.getElementById("confidence");
-        if (!pred || !conf) return;
+        if (!pred) return;
         pred.innerText = `
-          Prediction: ${result.label}\n
-        `;
-
-        conf.innerText = `
-          probability: ${result.confidences[result.label]}
+          Prediction: ${result.label}\n Confidence: ${result.confidences[result.label]}
         `;
 
         // Dispose the tensor to release the memory.
@@ -78,8 +74,7 @@ class TensorVideo extends Component {
           width="224"
           height="224"
         ></video>
-        <h1 id="prediction">Prediction:</h1>
-        <h3 id="confidence">Confidence:</h3>
+        <h1 id="prediction">Prediction: null Confidence: null</h1>
       </div>
     );
   }
