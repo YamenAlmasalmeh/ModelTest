@@ -1,0 +1,46 @@
+.Favorites{
+    text-align: center;
+}
+
+.Favorites h1{
+    margin-right: 10%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.grid{
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-bottom: 50px;
+    margin-left: 10%;
+}
+
+.collection{
+    width: auto;
+    height: 300px;
+    color: white;
+    border-radius: 10px;
+    text-align: left;
+    padding: 10px;
+    mix-blend-mode: difference;
+    overflow: hidden;
+    box-shadow: 0px 6px 12px -1px rgba(49,49,49,0.62);
+}
+
+
+.shoes{
+    background: linear-gradient(0deg, rgba(230,213,248,1) 0%, rgba(217,193,255,1) 100%);
+}
+
+.venice{
+    background: linear-gradient(0deg, rgba(246,190,88,1) 0%, rgba(249,151,83,1) 100%);
+}
+
+.tamu{
+    background: linear-gradient(180deg, rgba(233,54,54,1) 0%, rgba(245,111,111,1) 100%);
+}
+
+.yellowstone{
+    background: linear-gradient(180deg, rgba(126,192,238,1) 0%, rgba(194,221,241,1) 100%);
+}
