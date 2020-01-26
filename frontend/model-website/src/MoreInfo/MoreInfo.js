@@ -56,7 +56,7 @@ class MoreInfo extends Component {
                 <Slider {...settings}>
                     {images}
                 </Slider>
-                <h1>Models For: {this.props.content.name}</h1>
+                <h1 className = {classes.ModelHeading}>Models For: {this.props.content.name}</h1>
                 <p>Created by {this.props.content.creator}</p>
                 <div class="ui labeled button" tabindex="0">
                     <button class={likeButton} onClick={this.clickHandler}>
@@ -67,10 +67,10 @@ class MoreInfo extends Component {
                     </div>
                 </div>
                 <div>
-                    <button className={classes.Demo}>Demo</button>
+                    <button className={classes.Demo+" "+classes.RoundButton}>Demo</button>
                 </div>
                 <div>
-                    <button className={classes.Download}>Download</button>
+                    <button className={classes.Download+" "+classes.RoundButton}>Download</button>
                 </div>                
                 <BottomNav />
         </div>
