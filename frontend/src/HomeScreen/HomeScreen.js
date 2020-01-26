@@ -43,19 +43,38 @@ class HomeScreen extends Component {
         const Collections = Coll.getCollections();
 
         let renderedCollections = Collections.map((el) => {
-            if (el.rendered) {
-                const shorthand = el.url
-                return (<div className="seven wide column" >
-                    <Link to={"/moreinfo/" + el.url}>
-                        <div className={this.classDeterminer(el.name) + " " + classesDict[shorthand]}>
-                            <h3 style={{ "fontSize": "24px" }}>
-                                {el.name}
-                            </h3>
-                            <img src={el.img} alt={el.name} style={{ "height": "230px", "marginLeft": "10px" }}></img>
-                        </div>
-                    </Link>
-                </div>)
+            if (el.rendered === 1) {
+                if (el.images) {
+                    const shorthand = el.url
+                    return (<div className="seven wide column" >
+                        <Link to={"/moreinfo/" + el.url}>
+                            <div className={this.classDeterminer(el.name) + " " + classesDict[shorthand]}>
+                                <h3 style={{ "fontSize": "24px" }}>
+                                    {el.name}
+                                </h3>
+                                <img src={el.img} alt={el.name} style={{ "height": "230px", "marginLeft": "10px" }}></img>
+                            </div>
+                        </Link>
+                    </div>)
+                }
+                else {
+                    console.log(el)
+                    return (<div className="seven wide column" >
+                        <Link to={"/demo"}>
+                            <div onClick={() => {
+                                Coll.setCurrent(el.name)
+                            }} className={this.classDeterminer(el.name) + " " + classes.Test}>
+                                <h3 style={{ "fontSize": "24px" }}>
+                                    Test: {el.name}
+                                </h3>
+                                <img src={el.img} alt={el.name} style={{ "height": "230px", "marginLeft": "10px" }}></img>
+                            </div>
+                        </Link>
+                    </div>)
+                }
+
             }
+
         })
 
         return (

@@ -95,6 +95,12 @@ class App extends Component {
             {demoCollections}
             <Route
               exact
+              path={"/demo"}
+              render={routeProps => <Demo content={{name: Coll.getCurrent()}} {...routeProps} />}
+              key={"demo"}
+            />
+            <Route
+              exact
               path="/favs"
               render={() => (
                 <Favorites

@@ -55,3 +55,7 @@
     font-size: 25px;
     margin-right: 50px;
 }
+
+.Test{
+    background: linear-gradient(0deg, rgb(187, 187, 187) 0%, rgb(126, 126, 126) 100%);
+}

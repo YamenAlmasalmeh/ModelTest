@@ -58,6 +58,12 @@ class Create extends Component {
       }
     })
 
+    Coll.getCollections().push({
+      name: this.state.classifierName,
+      url: Math.floor(Math.random() * 100),
+      img: "museum.png",
+      rendered: 1
+    })
   }
 
   render() {
