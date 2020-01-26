@@ -14,6 +14,7 @@ async function trainClassification(webcam, classifier, classId) {
     net = await mobilenet.load();
   }
 
+
   // Capture an image from the web camera.
   const img = await webcam.capture();
 

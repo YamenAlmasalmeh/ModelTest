@@ -7,74 +7,46 @@ import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 import ModelHandler from "../ModelHandler";
+import TensorVideo from "../TensorVideo";
 
 class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
       held: false,
-      allModels: ["test", "testestset", "a"]
+      allModels: []
     };
     this.active = true;
     this.fillButton = this.fillButton.bind(this);
     this.unfillButton = this.unfillButton.bind(this);
-    this.camera = this.camera.bind(this);
     this.classifier = knnClassifier.create();
     this.autocomplete = React.createRef();
+    this.tensorVideo = React.createRef();
+    this.webcam = null;
   }
 
-  componentDidMount() {
-    this.camera();
+  publish(name) {
+    ModelHandler.createClassifier(name, this.classifier);
   }
-
-  componentWillUnmount() {
-    this.active = false;
-  }
-
-  async camera() {
-    const webcamElement = document.getElementById("webcam");
-
-    // Load the model.
-    const net = await ModelHandler.getNet();
-
-    // Create an object from Tensorflow.js data API which could capture image
-    // from the web camera as Tensor.
-    this.webcam = await tf.data.webcam(webcamElement, {
-      facingMode: "environment"
-    });
-
-    while (this.active) {
-      if (this.classifier.getNumClasses() > 0) {
-        const img = await this.webcam.capture();
-
-        // Get the activation from mobilenet from the webcam.
-        const activation = net.infer(img, "conv_preds");
-        // Get the most likely class and confidences from the classifier module.
-        const result = await this.classifier.predictClass(activation);
-
-        //classes[result.label] prediction
-        //result.confidences[result.label]
-        document.getElementById("prediction").innerText = `
-          Prediction: ${classes[result.label]}\n
-        `;
-
-        document.getElementById("confidence").innerText = `
-          probability: ${result.confidences[result.label]}
-        `;
-
-        // Dispose the tensor to release the memory.
-        img.dispose();
-      }
-
-      await tf.nextFrame();
-    }
-  }
-
-  publish(name) {}
 
   onPictureClick() {
     //check if combo box value exists in list
-    console.log(this.autocomplete);
+    const classifierName = "test";
+
+    if (!this.state.allModels.includes(classifierName)) {
+      this.setState(prev => {
+        const allModels = [...prev.allModels, classifierName];
+        return {
+          allModels
+        };
+      });
+    }
+
+    ModelHandler.trainClassification(
+      this.tensorVideo.current.webcam,
+      this.classifier,
+      classifierName
+    );
   }
 
   fillButton() {
@@ -88,19 +60,7 @@ class Create extends Component {
   render() {
     return (
       <div className={classes.Create}>
-        <video
-          ref={video => {
-            this.video = video;
-          }}
-          autoPlay
-          playsInline
-          muted
-          id="webcam"
-          width="224"
-          height="224"
-        ></video>
-        <h1 id="prediction">Prediction:</h1>
-        <h3 id="confidence">Confidence:</h3>
+        <TensorVideo classifier={this.classifier} ref={this.tensorVideo}></TensorVideo>
         <Autocomplete
           ref={this.autocomplete}
           className={classes.box}
