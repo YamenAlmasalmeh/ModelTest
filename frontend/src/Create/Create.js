@@ -13,11 +13,13 @@ class Create extends Component {
     super(props);
     this.state = {
       held: false,
-      allModels: ["test", "testestset", "a"]
+      allModels: ["test", "testestset", "a"],
+      nameBox: false,
     };
     this.active = true;
     this.fillButton = this.fillButton.bind(this);
     this.unfillButton = this.unfillButton.bind(this);
+    this.publishClickHandler = this.publishClickHandler.bind(this);
     this.camera = this.camera.bind(this);
     this.classifier = knnClassifier.create();
     this.autocomplete = React.createRef();
@@ -70,7 +72,7 @@ class Create extends Component {
     }
   }
 
-  publish(name) {}
+  publish(name) { }
 
   onPictureClick() {
     //check if combo box value exists in list
@@ -85,10 +87,16 @@ class Create extends Component {
     this.setState({ held: false });
   }
 
+  publishClickHandler(){
+    const newNameBox = !this.state.nameBox
+    this.setState({nameBox: newNameBox})
+  }
+
   render() {
     return (
       <div className={classes.Create}>
         <video
+          className={classes.video}
           ref={video => {
             this.video = video;
           }}
@@ -111,25 +119,32 @@ class Create extends Component {
           renderInput={params => (
             <TextField
               {...params}
-              label="Combo box"
+              label="Model Name"
               variant="outlined"
               fullWidth
             />
           )}
         />
-        <i
-          onClick={() => this.onPictureClick()}
-          className={
-            this.state.held
-              ? "fas fa-camera-retro " +
+        <form className={classes.root} noValidate autoComplete="off">
+          <TextField id="outlined-basic" label="Collection Name" variant="outlined" />
+        </form>
+        <div>
+          <i
+            onClick={() => this.onPictureClick()}
+            className={
+              this.state.held
+                ? "fas fa-camera-retro " +
                 classes.camera +
                 " " +
                 classes.cameraFilled
-              : "fas fa-camera-retro " + classes.camera
-          }
-          onMouseDown={this.fillButton}
-          onMouseUp={this.unfillButton}
-        ></i>
+                : "fas fa-camera-retro " + classes.camera
+            }
+            onMouseDown={this.fillButton}
+            onMouseUp={this.unfillButton}
+          ></i>
+          <i className={"fas fa-plus " + classes.correct} onClick={this.publishClickHandler}></i>
+        </div>
+        
         <BottomNav />
         <script src="index.js"></script>
       </div>
