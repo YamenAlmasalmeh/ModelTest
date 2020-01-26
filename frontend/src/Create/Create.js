@@ -102,14 +102,6 @@ class Create extends Component {
           </Link>
         </div>
 
-        <div className={classes.container}>
-          <div className="ui bulleted list">
-            {this.state.allModels.map(className => {
-              return <div className="item" key={className}>{className}</div>;
-            })}
-          </div>
-        </div>
-
         <BottomNav />
         <script src="index.js"></script>
       </div>

@@ -6,6 +6,10 @@ import ModelHandler from "../ModelHandler";
 class TensorVideo extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      prediction:"N/A",
+      confidence:"N/A"
+    }
     this.active = true;
     this.camera = this.camera.bind(this);
     this.webcam = null;
@@ -44,11 +48,10 @@ class TensorVideo extends Component {
         //result.confidences[result.label]
         this.prediction = result.label;
         this.confidence = result.confidences[result.label];
-        const pred = document.getElementById("prediction");
-        if (!pred) return;
-        pred.innerText = `
-          Prediction: ${result.label}\n Confidence: ${result.confidences[result.label]}
-        `;
+        this.setState({
+          prediction: this.prediction,
+          confidence: this.confidence
+        })
 
         // Dispose the tensor to release the memory.
         img.dispose();
@@ -73,7 +76,7 @@ class TensorVideo extends Component {
           width="224"
           height="224"
         ></video>
-        <h1 id="prediction">Prediction: null Confidence: null</h1>
+        <h1 id="prediction">Prediction: {this.state.prediction} Confidence: {this.state.confidence}</h1>
       </div>
     );
   }

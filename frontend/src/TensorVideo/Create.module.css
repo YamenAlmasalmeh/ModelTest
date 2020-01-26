@@ -1,6 +1,6 @@
 .video{
-    height: 230px;
-    width: 230px;
+    height: 330px;
+    width: 330px;
     margin-top: 30px;
     border: 1px solid black;
     padding: 10px;
@@ -50,4 +50,9 @@
     color: black;
     transition: 3s;
     background-color:rgb(158, 174, 226);
+}
+
+.Create h1{
+    font-size: 20px;
+    margin-top: 10px;
 }

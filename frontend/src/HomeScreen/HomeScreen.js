@@ -47,11 +47,11 @@ class HomeScreen extends Component {
                 const shorthand = el.url
                 return (<div className="seven wide column" >
                     <Link to={"/moreinfo/" + el.url}>
-                        <div className={this.classDeterminer("Shoes") + " " + classesDict[shorthand]}>
+                        <div className={this.classDeterminer(el.name) + " " + classesDict[shorthand]}>
                             <h3 style={{ "fontSize": "24px" }}>
                                 {el.name}
                             </h3>
-                            <img src={el.img} alt={el.name} style={{ "height": "300px", "marginLeft": "50px" }}></img>
+                            <img src={el.img} alt={el.name} style={{ "height": "230px", "marginLeft": "10px" }}></img>
                         </div>
                     </Link>
                 </div>)
@@ -61,6 +61,7 @@ class HomeScreen extends Component {
         return (
             <div className={classes.HomeScreen}>
                 <div className="ui search" style={{ "marginTop": "15px" }}>
+                    <span class={classes.title}>Runway</span>
                     <div className="ui icon input">
                         <input className="prompt" type="text" name="search" placeholder="Search" onChange={this.changeHandler} />
                         <i className="search icon"></i>
@@ -77,8 +78,8 @@ class HomeScreen extends Component {
                     <h3>Assisted</h3>
                     <div className="ui grid">
                         <div className="row">
-                            <div className="one wide column" />
-                            <div className="fourteen wide column">
+                            <div className="two wide column" />
+                            <div className="thirteen wide column">
                                 <div style={{
                                     "background": "linear-gradient(180deg, rgba(143,211,255,1) 0%, rgba(195,232,255,1) 100%)",
                                     "width": "auto",
@@ -86,6 +87,7 @@ class HomeScreen extends Component {
                                     "color": "white",
                                     "borderRadius": "10px",
                                     "textAlign": "left",
+                                    "marginRight": "6.25%",
                                     "padding": "10px",
                                     "mixBlendMode": "difference",
                                     "overflow": "hidden",
@@ -94,7 +96,7 @@ class HomeScreen extends Component {
                                 }}
                                 >
                                     <h3 style={{ "fontSize": "24px" }}>Visual Aid</h3>
-                                    <img src="eye.png" alt="eye" style={{ "width": "auto" }}></img>
+                                    <img src="eye.png" alt="eye" style={{ "height": "450px", "marginLeft": "60px" }}></img>
                                 </div>
 
                             </div>

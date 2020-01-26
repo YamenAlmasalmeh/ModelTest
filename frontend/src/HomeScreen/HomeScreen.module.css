@@ -48,3 +48,10 @@
 .hidden{
     display: none;
 }
+
+.title{
+    display: inline;
+    font-family: 'Lobster', cursive;
+    font-size: 35px;
+    margin-right: 130px;
+}
