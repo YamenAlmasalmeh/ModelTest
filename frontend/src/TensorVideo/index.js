@@ -50,7 +50,7 @@ class TensorVideo extends Component {
         this.confidence = result.confidences[result.label];
         this.setState({
           prediction: this.prediction,
-          confidence: this.confidence
+          confidence: (Math.round(this.confidence*100) / 100)
         })
 
         // Dispose the tensor to release the memory.
@@ -76,7 +76,7 @@ class TensorVideo extends Component {
           width="224"
           height="224"
         ></video>
-        <h1 id="prediction">Prediction: {this.state.prediction} Confidence: {this.state.confidence}</h1>
+        <h1 id="prediction">Prediction: {this.state.prediction} ||  Confidence: {this.state.confidence}</h1>
       </div>
     );
   }
